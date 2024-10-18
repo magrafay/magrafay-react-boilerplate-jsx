@@ -18,9 +18,9 @@ function App() {
 
   const checkAuth = () => {
     if (user && localStorage.getItem(TOKEN_KEY)) {
-      redirect("/");
+      return redirect("/");
     } else {
-      redirect("/auth/login");
+      return redirect("/auth/login");
     }
   };
 
