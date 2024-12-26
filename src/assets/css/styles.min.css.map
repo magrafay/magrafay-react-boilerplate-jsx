@@ -1,1 +1,1 @@
-{"version":3,"sourceRoot":"","sources":["../sass/_global-tailwind.scss"],"names":[],"mappings":"AAAA,eACA,qBACA,oBAEA,YACE,MACE,wBACA,gCAEA,uBACA,sCAEA,qBACA,wCAEA,4BACA,2BAEA,kBACA,qCAEA,6BACA,kCAEA,2BACA,0CAEA,wBACA,uCAEA,0BACA,sCAEA,wBAEA,iBAGF,MACE,yBACA,0BAEA,qBACA,sCAEA,sBACA,iCAEA,sBACA,sCAEA,sBACA,qBAEA,mBACA,+BAEA,uBACA,uCAEA,+BACA,oCAEA,yBACA,sCAEA,oBAEA,kBAIJ,YACE,EACE,qBAEF,KACE,qCACA","file":"styles.min.css"}
+{"version":3,"sourceRoot":"","sources":["../sass/styles.scss"],"names":[],"mappings":"AAAA,eACA,qBACA","file":"styles.min.css"}

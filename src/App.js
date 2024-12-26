@@ -1,78 +1,48 @@
-import { Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
 import { createBrowserRouter, redirect } from "react-router-dom";
-// import { useSelector } from "react-redux";
+import { TOKEN_KEY } from "./helpers/Constants";
+import { useAuth } from "provider/AuthContext";
 import AppRouterProvider from "./routes/AppRoutesProvider";
 import PrivateRoutes from "./routes/PrivateRoute";
 import PublicRoutes from "./routes/PublicRoutes";
-import AppLoader from "./components/loaders/AppLoader";
-import "./assets/css/styles.min.css";
-import { TOKEN_KEY } from "./helpers/constants";
-// import { AccordionDemo } from "./components/shadcn/Accordion";
+import AppLoader from "./components/ui/loaders/AppLoader";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// import "assets/css/tailwind.min.css";
+import "assets/css/styles.min.css";
 
 function App() {
-  const [matches, setMatches] = useState(false);
-  let user = { name: "magrafay" };
-  // const { user } = useSelector((state) => ({
-  //   user: state.loggedInUser,
-  // }));
+  const { user } = useAuth();
+  const isAuthenticated = !!user;
 
   const checkAuth = () => {
-    if (user && localStorage.getItem(TOKEN_KEY)) {
+    if (isAuthenticated) {
       return redirect("/");
     } else {
-      return redirect("/auth/login");
+      return redirect("/");
     }
   };
 
-  const router = createBrowserRouter([
-    checkAuth() ? PrivateRoutes() : {},
-    ...PublicRoutes(),
-  ]);
-
-  useEffect(() => {
-    localStorage.setItem(
-      TOKEN_KEY,
-      "CcFjvOP0ujo5mxLmqfYFImz5d66ysUFeGcYGTpqceUudpPGd30HaEgWoUy486u5h"
-    );
-    const media = window.matchMedia("(max-width: 1200px)");
-    if (media.matches !== matches) {
-      setMatches(media.matches);
-    }
-    const listener = () => {
-      setMatches(media.matches);
-    };
-    media.addListener(listener);
-    return () => media.removeListener(listener);
-  }, [matches]);
+  const router = createBrowserRouter([checkAuth() ? PrivateRoutes() : {}, ...PublicRoutes()]);
 
   return (
-    <>
-      <div className="app-wrapper">
-        <Suspense fallback={<AppLoader />}>
-          <AppRouterProvider router={router} />
-          {/* <Toaster
-            position="top-right"
-            reverseOrder={false}
-            gutter={15}
-            containerClassName="toaster-container"
-            containerStyle={{ marginTop: "60px" }}
-            toastOptions={{
-              // Define default options
-              className: "",
-              duration: 2000,
-              // Default options for specific types
-              error: {
-                duration: 3000,
-                theme: {
-                  primary: "red",
-                  secondary: "white",
-                },
-              },
-            }}
-          /> */}
-        </Suspense>
-      </div>
-    </>
+    <div className="app-wrapper">
+      <Suspense fallback={<AppLoader />}>
+        <AppRouterProvider router={router} />
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+      </Suspense>
+    </div>
   );
 }
 
